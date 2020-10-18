@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <!-- 设置mysql驱动路径 -->
+    <classPathEntry
+            location="D:\cola\Java All\maven\apache-maven-3.6.2-bin\apache-maven-3.6.2\repo\mysql\mysql-connector-java\8.0.16\mysql-connector-java-8.0.16.jar" />
+    <!-- 此处指定生成针对MyBatis3的DAO -->
+    <context id="context1" targetRuntime="MyBatis3">
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+        <commentGenerator>
+
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+        <!-- jdbc连接信息 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/sql_test?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=GMT"
+                        userId="root"
+                        password="root">
+            <!--MySQL 不支持 schema 或者 catalog 所以需要添加这个-->
+            <!--参考 : http://www.mybatis.org/generator/usage/mysql.html-->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+        <!-- 生成模型的包名和位置（报错就把位置改成项目的名称） -->
+        <javaModelGenerator targetPackage="cn.coco.our.model"
+                            targetProject="src/main/java" />
+        <!-- 生成映射文件的包名和位置 -->
+        <sqlMapGenerator targetPackage="cn.coco.our.mapping"
+                         targetProject="src/main/java" />
+        <!-- 生成DAO的类文件以及配置文件 -->
+        <javaClientGenerator targetPackage="cn.coco.our.mapper"
+                             targetProject="src/main/java" type="XMLMAPPER" />
+        <!-- 想要生成的数据库表,自动化工具会根据该表的结构生成相应的vo对象 -->
+        <!-- tableName:用于自动生成代码的数据库表；domainObjectName:对应于数据库表的javaBean类名 -->
+        <table tableName="user" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.coco.middle.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="cn.coco.middle.model.User">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="birth" jdbcType="TIMESTAMP" property="birth" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="add_time" />
+    <result column="add_status" jdbcType="VARCHAR" property="add_status" />
+    <result column="deal_time" jdbcType="TIMESTAMP" property="deal_time" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, name, sex, birth, department, add_time, add_status, deal_time
+  </sql>
+
+  <!--List queryList(int count);-->
+  <select id="queryList" resultMap="BaseResultMap">
+    select
+        <include refid="Base_Column_List" />
+    from user where
+        add_status = '10I' limit #{count}
+  </select>
+
+  <update id="updateStatusById">
+    update  user
+    set add_status = #{add_status}, deal_time = #{deal_time,jdbcType=TIMESTAMP}
+    where id =#{id}
+  </update>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.coco.middle.model.User">
+    insert into user (name, sex,
+      birth, department, add_time, 
+      add_status, deal_time)
+    values (#{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
+      #{birth,jdbcType=TIMESTAMP}, #{department,jdbcType=VARCHAR}, #{add_time,jdbcType=TIMESTAMP}, 
+      #{add_status,jdbcType=VARCHAR}, #{deal_time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.coco.middle.model.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="birth != null">
+        birth,
+      </if>
+      <if test="department != null">
+        department,
+      </if>
+      <if test="add_time != null">
+        add_time,
+      </if>
+      <if test="add_status != null">
+        add_status,
+      </if>
+      <if test="deal_time != null">
+        deal_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null">
+        #{birth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="add_time != null">
+        #{add_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="add_status != null">
+        #{add_status,jdbcType=VARCHAR},
+      </if>
+      <if test="deal_time != null">
+        #{deal_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.coco.middle.model.User">
+    update user
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null">
+        birth = #{birth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="add_time != null">
+        add_time = #{add_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="add_status != null">
+        add_status = #{add_status,jdbcType=VARCHAR},
+      </if>
+      <if test="deal_time != null">
+        deal_time = #{deal_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.coco.middle.model.User">
+    update user
+    set name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birth = #{birth,jdbcType=TIMESTAMP},
+      department = #{department,jdbcType=VARCHAR},
+      add_time = #{add_time,jdbcType=TIMESTAMP},
+      add_status = #{add_status,jdbcType=VARCHAR},
+      deal_time = #{deal_time,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
